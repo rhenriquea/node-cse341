@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../../../includes/header.ejs %>
+</head>
+
+<body>
+  <% include ../../../includes/nav.ejs %>
+<div class="jumbotron text-center">
+  <div class="container">
+    <h1><%= title %></h1>
+  </div>
+</div>
+<div class="container">
+  <form action="/prove/week01/create-user" method="POST">
+    <input type="text" name="username" />
+    <button type="submit">Send</button>
+  </form>
+</div>
+
+
+</body>
+</html>

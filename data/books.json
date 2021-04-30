@@ -1,7 +1,7 @@
 [
   {
     "title": "Harry Potter",
-    "imgUrl": "/images/no_image.png",
+    "imgUrl": "https://super.abril.com.br/wp-content/uploads/2020/07/30-07_HarryPotter_FB.jpg?quality=70&strip=info",
     "summary": "Harry Potter is a series of seven fantasy novels written by British author J. K. Rowling. The series chronicles the adventures of a young man named Harry James Potter, who discovers at the age of 11 that he is a wizard when invited to study at Hogwarts School of Witchcraft and Wizardry"
   },
   {
@@ -13,5 +13,5 @@
     "title": "Percy Jackson",
     "summary": "Percy Jackson & the Olympians is a literary series composed of five adventure and fantasy books, written by the American Rick Riordan, which portrays Greek mythology in the 21st century. The main character of the series is Percy Jackson, who discovers he is a half-blooded son of Poseidon, god of the sea.",
     "imgUrl": "https://www.serietotaal.nl/images/nieuws/t/f9x57hofv5de-full.jpg"
-  },
+  }
 ]

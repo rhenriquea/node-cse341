@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const PORT = process.env.PORT || 5000
+require('dotenv').config()
 
 const app = express();
 const routes = require('./routes');

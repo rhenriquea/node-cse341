@@ -48,11 +48,7 @@ function addBook(e) {
 
 async function save(e) {
     e.preventDefault();
-
-    const books = allBooks.map((book) => axios.post('/prove/week02/addBook', book));
-
-    await Promise.all(books);
-
+    await axios.post('/prove/week02/addBooks', allBooks);
     window.location.replace('/prove/week02/books');
 
 }

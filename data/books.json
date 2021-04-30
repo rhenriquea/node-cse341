@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Harry Potter",
+    "imgUrl": "/images/no_image.png",
+    "summary": "Harry Potter is a series of seven fantasy novels written by British author J. K. Rowling. The series chronicles the adventures of a young man named Harry James Potter, who discovers at the age of 11 that he is a wizard when invited to study at Hogwarts School of Witchcraft and Wizardry"
+  },
+  {
+    "title": "The Da Vinci Code",
+    "imgUrl": "/images/no_image.png",
+    "summary": "The Da Vinci Code is a 2003 detective novel written by Dan Brown. It is the second Brown novel to include the character Robert Langdon: the first was his 2000 novel, Angels & Demons."
+  },
+  {
+    "title": "Percy Jackson",
+    "summary": "Percy Jackson & the Olympians is a literary series composed of five adventure and fantasy books, written by the American Rick Riordan, which portrays Greek mythology in the 21st century. The main character of the series is Percy Jackson, who discovers he is a half-blooded son of Poseidon, god of the sea.",
+    "imgUrl": "https://www.serietotaal.nl/images/nieuws/t/f9x57hofv5de-full.jpg"
+  },
+]

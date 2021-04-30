@@ -6,22 +6,43 @@
 
 <body>
   <% include ../../includes/nav.ejs %>
-  <div class="jumbotron text-center">
-    <div class="container">
-      <h1><%= title %></h1>
-      <h2><%= subtitle %></h2>
-      <p><%= description %></p>
-    </div>
+  <div class="jumbotron container mt-3">
+    <h1 class="display-4 font-weight-bold"><%= title %></h1>
+    <h2 class="font-weight-light"><%= subtitle %></h2>
+    <p class="lead"><%= description %></p>
   </div>
   <div class="container">
-    <ul>
-      <li>
-        <a href="/prove/week01">Week 01</a>
-      </li>
-      <li>
-        <a href="/prove/week02">Week 02</a>
-      </li>
-    </ul>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Week 01</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Add User to List</h6>
+              <p class="card-text">Simple example where you can add a user to a list</p>
+              <a href="/prove/week01" class="card-link">View</a>
+            </div>
+          </div>
+
+        </div>
+        <div class="col">
+
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Week 02</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Library System</h6>
+              <p class="card-text">Simple example for a library system</p>
+              <a href="/prove/week02" class="card-link">View</a>
+            </div>
+          </div>
+
+        </div>
+        <div class="col"></div>
+        <div class="col"></div>
+      </div>
+    </div>
+
   </div>
 </body>
 </html>

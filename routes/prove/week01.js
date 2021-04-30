@@ -13,7 +13,7 @@ router.get('/',(req, res, next) => {
 
 router.get('/users',(req, res, next) => {
   res.render('pages/prove/week01/users', { 
-      title: 'Week 01: Users', 
+      title: 'Users', 
       path: '/prove/week01',
       users: USERS
   });

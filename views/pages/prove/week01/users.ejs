@@ -1,24 +1,27 @@
-
 <!DOCTYPE html>
 <html>
+
 <head>
   <% include ../../../includes/header.ejs %>
 </head>
 
 <body>
   <% include ../../../includes/nav.ejs %>
-<div class="jumbotron text-center">
-  <div class="container">
-    <h1><%= title %></h1>
-  </div>
-</div>
-<div class="container">
-  <ul>
-    <% for(var i=0; i < users.length; i++) { %>
-      <li><%= users[i] %></li>
-    <% } %>
-  </ul>  
-</div>
+    <div class="container w-25 mt-5">
+      <h1><%= title %></h1>
+      <p>
+        If you want to add a user here go to
+        <a href="/prove/week01">Week 01</a> page
+      </p>
+      <ul class="list-group">
+        <% for(var i=0; i < users.length; i++) { %>
+          <li class="list-group-item">
+            <%= users[i] %>
+          </li>
+        <% } %>
+      </ul>
+    </div>
 
 </body>
+
 </html>

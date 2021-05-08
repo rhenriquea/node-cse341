@@ -23,3 +23,14 @@ form:invalid button[type="submit"] {
   pointer-events: none;
   opacity: 0.5;
 } 
+
+.avatar {
+  border-radius: 50%;
+  height: 52px;
+  width: 52px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 1px solid lightgrey;
+  background: #e9ecef;
+}

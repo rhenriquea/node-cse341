@@ -11,14 +11,13 @@ routes.get('/', (req, res, next) => {
     });
 })
 
-// Prove Routes
-const prove = require('./prove');
-
+// Prove App Routes
+const prove = require('../apps/prove/routes');
 routes.use('/prove', prove);
 
-// Shop
-const shop = require('./shop/shop')
-const admin = require('./shop/admin')
+// Shop App
+const shop = require('../apps/shop/routes/shop')
+const admin = require('../apps/shop/routes/admin')
 
 routes.use('/shop', shop)
 routes.use('/shop/admin', admin)

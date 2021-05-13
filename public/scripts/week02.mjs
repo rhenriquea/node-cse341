@@ -3,7 +3,6 @@ const addedListSection = document.getElementsByClassName('added-list-section')[0
 const booksList = document.getElementById('addedBooks');
 const saveBookBtn = document.getElementById('saveBtn');
 
-
 const allBooks = [];
 
 form.addEventListener('submit', addBook);
@@ -50,5 +49,4 @@ async function save(e) {
     e.preventDefault();
     await axios.post('/prove/week02/addBooks', allBooks);
     window.location.replace('/prove/week02/books');
-
 }

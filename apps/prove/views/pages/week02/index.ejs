@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../../includes/header.ejs %>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+  <% include ../../includes/nav.ejs %>
+    <div class="container mt-5">
+      <div class="row">
+      
+        <div class="col-6">
+      
+          <form class="border rounded p-4" id="books">
+            <div class="form-group mr-3">
+              <label class="font-weight-bold" for="title">Book Title</label>
+              <input type="text" class="form-control" id="title" name="title" aria-describedby="titleRequired" required>
+              <small id="titleRequired" class="form-text text-danger">*Required field</small>
+            </div>
+            <div class="form-group mr-3">
+              <label class="font-weight-bold" for="imgUrl">Book Cover</label>
+              <input type="text" class="form-control" id="imgUrl" name="imgUrl">
+            </div>
+            <div class="form-group">
+              <label class="font-weight-bold" for="summary">Summary</label>
+              <textarea type="text" class="form-control" id="summary" name="summary" aria-describedby="summaryRequired" required></textarea>
+              <small id="summaryRequired" class="form-text text-danger">*Required field</small>
+            </div>
+            <div class="text-right">
+              <button type="submit" class="btn btn-primary" type="button">Add to bulk</button>
+            </div>
+      
+          </form>
+      
+        </div>
+       
+        <div class="col-6 hidden added-list-section">
+          <h5>Books to be added:</h5>
+          <ul class="list-group" id="addedBooks"></ul>
+          <div class="text-center">
+            <button id="saveBtn" class="btn btn-block btn-success my-3">Save</button>
+            <a href="/prove/week02/books">All books</a>
+          </div>
+        </div>
+
+      </div>
+
+      <script src="/scripts/week02.mjs" type="module"></script>
+</body>
+
+</html>

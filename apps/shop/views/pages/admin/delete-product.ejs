@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../../includes/header.ejs %>
+</head>
+
+<body>
+  <% include ../../includes/nav.ejs %>
+
+  <main class="container my-4">
+    <h1><%= title %></h1>
+    <p>Are you sure you want to delete <%= product.title %>?</p>
+    <form class="border rounded p-4" action="/shop/admin/delete-product" method="POST">
+      <input type="hidden" name="productId" value="<%= product._id %>">
+      <div class="text-right">
+        <button type="submit" class="btn btn-danger" type="button">Delete Product</button>
+      </div>
+  
+    </form>
+  </main>
+
+</body>
+</html>

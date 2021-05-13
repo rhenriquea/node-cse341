@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+
+    <a href="/" class="navbar-brand"><img class="logo" src="/images/BYUI-logo.png" alt="BYU Idaho logo"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item <%= path === '/' ? 'active' : ''%>">
+          <a class="nav-link d-flex" href="/"><span class="material-icons mr-1">
+            home
+            </span>Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Prove Assignments
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item <%= path === '/prove/week01' ? 'active' : ''%>" href="/prove/week01">Week 01</a>
+            <a class="dropdown-item <%= path === '/prove/week02' ? 'active' : ''%>" href="/prove/week02">Week 02</a>
+            <a class="dropdown-item <%= path === '/prove/week03' ? 'active' : ''%>" href="/prove/week03">Week 03</a>
+          </div>
+        </li>
+        <li class="nav-item <%= path === '/shop' ? 'active' : ''%>">
+          <a class="nav-link d-flex" href="/shop"><span class="material-icons mr-1">
+            shopping_cart
+            </span>Shop</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

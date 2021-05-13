@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../../includes/header.ejs %>
+</head>
+
+<body>
+  <% include ../../includes/nav.ejs %>
+
+    <div class="container mt-3">
+      <h1><%= title %></h1>
+
+      <div>
+        <a href="/shop/admin/add-product">Add New Product</a>
+      </div>
+
+      <ul class="list-group mb-5">
+        <% for(product of products) { %>
+          <li class="list-group-item d-flex align-items-center">
+            <div class="mx-3 img-thumbnail" style="background-image: url(<%= product.imageUrl %>);" ></div>
+            <div class="card-body">
+              <h3 class="m-0"><%= product.title %></h3>
+              <h4>
+                <span class="badge badge-success">$ <%= product.price %></span>
+              </h4>
+              <p class="font-weight-light small"><%= product.description %>
+                <br>
+                <a href="/shop/products/<%= product._id %>">Read more...</a>
+              </p>
+              <a href="/shop/admin/edit/<%= product._id %>" class="btn btn-sm btn-primary d-inline-flex">
+                <i class="material-icons mr-1">edit</i>
+                Edit
+              </a>
+              <a href="/shop/admin/delete/<%= product._id %>" class="btn btn-sm btn-danger d-inline-flex">
+                <i class="material-icons mr-1">delete</i>
+                Delete
+              </a>
+              
+            </div>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+    
+</body>
+</html>

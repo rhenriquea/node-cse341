@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../../includes/header.ejs %>
+</head>
+
+<body>
+  <% include ../../includes/nav.ejs %>
+    <div class="container w-50 mt-5">
+      <h1><%= title %></h1>
+      <p>
+        To add more books go to
+        <a href="/prove/week02">Week 02</a> page
+      </p>
+      <ul class="list-group mb-5">
+        <% for(book of books) { %>
+          <li class="list-group-item d-flex align-items-center">
+            <div class="mx-3 img-thumbnail" style="background-image: url(<%= book.imgUrl %>);" ></div>
+            <div>
+              <h3 class="m-0"><%= book.title %></h3>
+              <p class="m-0 font-weight-light small"><%= book.summary %></p>
+            </div>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+
+</body>
+
+</html>

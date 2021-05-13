@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../../includes/header.ejs %>
+  <k src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></k>
+  <link rel="stylesheet" href="/stylesheets/week03.css"></link>
+</head>
+
+<body>
+  <% include ../../includes/nav.ejs %>
+    <div class="container mt-5">
+      
+      <h1>Users</h1>
+
+      <div class="row row-cols-1 row-cols-md-3">
+     
+      <% for(user of users) { %>
+        <div class="col mb-4">
+          <a href="/prove/week03/<%= user.id %>">
+            <div class="card h-100">
+              <div class="avatar mt-3 mx-3" style="background-size: cover; background-image: url(<%= user.avatar %>);" ></div>
+              <div class="card-body">
+                <h5 class="mb-0 card-title"><%= user.first_name %> <%= user.last_name %></h5>
+                <small class="card-subtitle"><%= user.job_function %></small>
+                <p class="card-text"><%= user.email %> </p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <% } %>
+      </div>
+
+    </div>
+
+</body>
+
+</html>

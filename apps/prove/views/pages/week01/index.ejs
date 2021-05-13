@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../../includes/header.ejs %>
+</head>
+
+<body>
+  <% include ../../includes/nav.ejs %>
+  <div class="container w-25 mt-5">
+      <h1><%= title %></h1>
+    
+      <p>This example allows you to do a POST call to <code>/create-user</code>
+      where it will be displayed on the <code>/users</code> route
+      </p>
+
+      <form action="/prove/week01/create-user" method="POST">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" id="username" name="username" aria-describedby="usernameTip">
+          <small id="usernameTip" class="form-text text-muted">Choose a username</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+</body>
+
+</html>

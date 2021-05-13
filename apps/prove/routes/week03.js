@@ -25,7 +25,7 @@ router.get('/', async (req, res, next) => {
 
   users = await getStoredUsers();
   
-  res.render('pages/week03', {
+  res.render('pages/prove/week03', {
       title: 'Week 03',
       path: '/prove/week03',
       users
@@ -38,7 +38,7 @@ router.get('/:id', async (req, res, next) => {
   users = await getStoredUsers();
   const user = users.find(user => `${user.id}` === req.params.id);
 
-  res.render('pages/week03/details', {
+  res.render('pages/prove/week03/details', {
       title: 'Week 03',
       path: '/prove/week03',
       user

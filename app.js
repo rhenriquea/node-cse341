@@ -2,14 +2,20 @@ require('dotenv').config()
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const compression = require('compression');
+
 const path = require('path');
+
 const User = require('./apps/shop/models/user');
+
 
 const routes = require('./routes');
 const { connectDb } = require('./database');
 
 const app = express();
 const PORT = process.env.PORT || 5000
+
+app.use(compression());
 
 // User middleware
 app.use(async (req, res, next) => {

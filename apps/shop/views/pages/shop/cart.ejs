@@ -8,33 +8,55 @@
   <% include ../../includes/nav.ejs %>
 
     <div class="container mt-3">
-      <h1><%= title %></h1>
 
-      <ul class="list-group mb-5">
-        <% for(product of products) { %>
-          <li class="list-group-item d-flex align-items-center">
-            <div class="mx-3 img-thumbnail" style="background-image: url(<%= product.imageUrl %>);" ></div>
-            <div class="card-body">
-              <h3 class="m-0"><%= product.title %></h3>
-              <h4>
-                <span class="badge badge-success">$ <%= product.price %></span>
-              </h4>
-              <h4>
-                <span class="badge badge-primary">Amount: <%= product.quantity %></span>
-              </h4>
-              <p class="font-weight-light small"><%= product.description %>
-                <br>
-                <a href="/shop/products/<%= product._id %>">Read more...</a>
-              </p>
-              <form action="/shop/cart/delete/<%= product._id %>" method="POST">
-                <button class="btn btn-sm btn-danger d-inline-flex" type="submit">
-                  <i class="material-icons mr-1">delete</i>
-                  Delete</button>
-              </form>
-            </div>
-          </li>
-        <% } %>
-      </ul>
+      <% if(products.length > 0) { %>
+
+        <div class="col-md-4 order-md-2 mb-4 m-auto">
+          
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Your cart</span>
+            <span class="badge badge-secondary badge-pill"><%= cartCount %></span>
+          </h4>
+
+          <ul class="list-group mb-3">
+
+            <% for(product of products) { %>
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <img class="mx-3" height="150" width="150" src="<%= product.imageUrl %>" ></img>
+                <h6 class="my-0"><%= product.title %> (<%= product.quantity %>x)</h6>
+                <small class="text-muted"><%= product.description.substring(0,50); %>...</small>
+              </div>
+              <div class="d-flex flex-column justify-content-between">
+                <span class="text-muted">$<%= product.total %></span>
+                <form class="text-right" action="/shop/cart/delete/<%= product._id %>" method="POST">
+                  <button class="btn btn-sm btn-danger d-inline-flex" type="submit">
+                    <i class="material-icons">delete</i>
+                  </button>
+                </form>
+              </div>
+            </li>
+            <% } %>
+
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Total (USD)</span>
+              <strong>$<%= cartTotal %></strong>
+            </li>
+          </ul>
+
+          <button class="btn btn-success btn-block">
+            Proceed to Checkout
+          </button>
+        </div>
+
+      <% } else { %>
+        <div class="m-auto text-center text-muted">
+          <span class="material-icons extra-large-icon">
+            shopping_basket
+          </span>
+          <p>No products added to cart</p>
+        </div>
+      <% } %>
     </div>
 </body>
 </html>

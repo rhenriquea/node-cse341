@@ -34,3 +34,7 @@ form:invalid button[type="submit"] {
   border: 1px solid lightgrey;
   background: #e9ecef;
 }
+
+.extra-large-icon {
+  font-size: 85px !important;
+}

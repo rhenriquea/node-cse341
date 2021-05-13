@@ -30,13 +30,17 @@ exports.addToCart = async(req, res, next) => {
 };
 
 exports.getCart = async(req, res, next) => {
-    let products = await req.user.getCart();
+    const products = await req.user.getCart();
+    const cartTotal = products.reduce((acc, product) => {
+      return acc + +product.total
+    }, 0).toFixed(2);
 
     res.render('pages/shop/cart', {
         title: 'Cart',
-        path: '/products',
+        path: '/shop/cart',
         products,
-        cartCount: req.user.getCartProductsAmount()
+        cartCount: req.user.getCartProductsAmount(),
+        cartTotal,
     });
 };
 

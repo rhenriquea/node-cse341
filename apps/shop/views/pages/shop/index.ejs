@@ -10,26 +10,36 @@
     <div class="container mt-3">
       <h1><%= title %></h1>
 
-      <ul class="list-group mb-5">
-        <% for(product of products) { %>
-          <li class="list-group-item d-flex align-items-center">
-            <div class="mx-3 img-thumbnail" style="background-image: url(<%= product.imageUrl %>);" ></div>
-            <div class="card-body">
-              <h3 class="m-0"><%= product.title %></h3>
-              <h4>
-                <span class="badge badge-success">$ <%= product.price %></span>
-              </h4>
-              <p class="font-weight-light small"><%= product.description %>
-                <br>
-                <a href="/shop/products/<%= product._id %>">Read more...</a>
-              </p>
-              <form action="/shop/cart/<%= product._id %>" method="POST">
-                <button id="add-to-cart" class="btn btn-primary">Add to Cart</button>
-              </form>
+      <% if(products.length > 0) { %>
+        <div class="row row-cols-1 row-cols-md-3">
+          <% for(product of products) { %>
+            <div class="col mb-4">
+              <div class="card h-100">
+                <div class="img-thumbnail" style="background-image: url(<%= product.imageUrl %>);" ></div>
+                <div class="card-body pb-3 pt-0 px-2">
+                  <div class="d-flex justify-content-between mt-3">
+                    <a href="/shop/products/<%= product._id %>">
+                      <h3 class="m-0"><%= product.title %></h3>
+                    </a>
+                    <h4>
+                      <span class="badge badge-success">$ <%= product.price %></span>
+                    </h4>
+                  </div>
+                  <p class="font-weight-light small"><%= product.description %>
+                    <br>
+                    
+                  </p>
+                  <form class="text-right" action="/shop/cart/<%= product._id %>" method="POST">
+                    <button id="add-to-cart" class="btn btn-sm d-inline-flex btn-primary">Add <i class="material-icons">add</i></button>
+                  </form>
+                </div>
+              </div>
             </div>
-          </li>
-        <% } %>
-      </ul>
+          <% } %>
+        </div>
+      <% } else { %>
+        <p>There are no products registered. <a href="/shop/admin/products">Login as an Admin</a> to add products to the store.</p>
+      <% } %>
     </div>
 </body>
 </html>

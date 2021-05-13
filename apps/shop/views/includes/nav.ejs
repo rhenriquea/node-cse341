@@ -6,13 +6,13 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
+        <li class="nav-item <%= path === '/shop' ? 'active' : ''%>">
           <a class="nav-link" href="/shop">Products <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item <%= path === '/shop/admin/products' ? 'active' : ''%>">
           <a class="nav-link" href="/shop/admin/products">Admin</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item <%= path === '/shop/cart' ? 'active' : ''%>">
           <a class="nav-link" href="/shop/cart">Cart</a>
         </li>
       </ul>

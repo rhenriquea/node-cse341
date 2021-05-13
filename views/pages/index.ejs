@@ -13,56 +13,25 @@
   </div>
   <div class="container">
     <div class="container">
-      <div class="row">
-        <div class="col">
-          
-          <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title">Week 01</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Add User to List</h6>
-              <p class="card-text">Simple example where you can add a user to a list</p>
-              <a href="/prove/week01" class="card-link">View</a>
+
+      <div class="row row-cols-1 row-cols-md-3">
+     
+        <% for(assignment of assignments) { %>
+          <div class="col mb-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="mb-0 card-title"><%= assignment.title %></h5>
+                <small class="card-subtitle"><%= assignment.subtitle %></small>
+                <p class="card-text"><%= assignment.description %></p>
+                <div class="text-right">
+                  <a href="<%= assignment.path %>">View</a>
+                </div>
+              </div>
             </div>
           </div>
-
+          <% } %>
         </div>
-        <div class="col">
 
-          <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title">Week 02</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Library System</h6>
-              <p class="card-text">Simple example for a library system</p>
-              <a href="/prove/week02" class="card-link">View</a>
-            </div>
-          </div>
-
-        </div>
-        <div class="col">
-
-          <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title">Week 03</h5>
-              <h6 class="card-subtitle mb-2 text-muted">JSON Data</h6>
-              <p class="card-text">Passing ID's as params using a fake users data JSON</p>
-              <a href="/prove/week03" class="card-link">View</a>
-            </div>
-          </div>
-
-        </div>
-        <div class="col">
-
-          <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title">E-commerce</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Sample E-commerce Server</h6>
-              <p class="card-text">A sample e-commerce project using Node.js and MongoDB</p>
-              <a href="/shop" class="card-link">View</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
     </div>
 
   </div>

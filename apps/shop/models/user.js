@@ -65,9 +65,12 @@ class User {
         .toArray();
 
       products = products.map((p) => {
+        const cartItem = this.cart.items.find(i => i.productId.toString() === p._id.toString());
+
         return {
           ...p,
-          quantity: this.cart.items.find(i => i.productId.toString() === p._id.toString()).amount
+          quantity: cartItem.amount,
+          total: (cartItem.amount * p.price).toFixed(2)
       }});
       
       return products;

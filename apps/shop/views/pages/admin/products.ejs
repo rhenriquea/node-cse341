@@ -8,38 +8,57 @@
   <% include ../../includes/nav.ejs %>
 
     <div class="container mt-3">
-      <h1><%= title %></h1>
 
-      <div>
-        <a href="/shop/admin/add-product">Add New Product</a>
-      </div>
-
-      <ul class="list-group mb-5">
-        <% for(product of products) { %>
-          <li class="list-group-item d-flex align-items-center">
-            <div class="mx-3 img-thumbnail" style="background-image: url(<%= product.imageUrl %>);" ></div>
-            <div class="card-body">
-              <h3 class="m-0"><%= product.title %></h3>
-              <h4>
-                <span class="badge badge-success">$ <%= product.price %></span>
-              </h4>
-              <p class="font-weight-light small"><%= product.description %>
-                <br>
-                <a href="/shop/products/<%= product._id %>">Read more...</a>
-              </p>
-              <a href="/shop/admin/edit/<%= product._id %>" class="btn btn-sm btn-primary d-inline-flex">
-                <i class="material-icons mr-1">edit</i>
-                Edit
-              </a>
-              <a href="/shop/admin/delete/<%= product._id %>" class="btn btn-sm btn-danger d-inline-flex">
-                <i class="material-icons mr-1">delete</i>
-                Delete
-              </a>
-              
+      <% if(products.length > 0) { %>
+        <div>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Image</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for(product of products) { %>
+                    <tr>
+                      <td><img height="50" width="50" src="<%= product.imageUrl %>" alt="<%= product.title %>"/></td>
+                      <td class="text-nowrap font-weight-bolder"><%= product.title %></td>
+                      <td>
+                        <small>
+                          <%= product.description %>
+                        </small>
+                      </td>
+                      <td><span class="badge badge-success">$ <%= product.price %></span></td>
+                      <td>
+                        <div class="d-flex">
+                          <a href="/shop/admin/edit/<%= product._id %>" class="m-1 btn btn-sm btn-primary d-inline-flex">
+                            <i class="material-icons mr-1">edit</i>
+                          </a>
+                          <a href="/shop/admin/delete/<%= product._id %>" class="m-1 btn btn-sm btn-danger d-inline-flex">
+                            <i class="material-icons mr-1">delete</i>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  <% } %>
+                </tbody>
+              </table>
             </div>
-          </li>
-        <% } %>
-      </ul>
+          </div>
+          <div class="text-right mb-3">
+            <a class="btn btn-success" href="/shop/admin/add-product">Add New Product</a>
+          </div>      
+      <% } else { %>
+        <div class="border m-auto p-5 rounded text-center w-50">
+          <p>Start adding products with the button below</p>
+          <a class="btn btn-success" href="/shop/admin/add-product">Add New Product</a>
+        </div>
+      <% } %>
+
     </div>
     
 </body>

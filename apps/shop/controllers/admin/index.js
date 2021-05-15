@@ -1,7 +1,7 @@
 const Product = require('../../models/product');
 
 exports.getAdminProducts = async(req, res, next) => {
-    const products = await Product.fetchAll();
+    const products = await Product.find().populate('userId');
 
     res.render('pages/admin/products', {
         title: 'Add Product',
@@ -21,7 +21,9 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.getEditProduct = async(req, res, next) => {
     const { id } = req.params;
-    const product = await Product.find(id);
+    const product = await Product.findById(id);
+
+    if (!product) return res.redirect('/shop');
 
     res.render('pages/admin/edit-product', {
         title: 'Edit -',
@@ -33,7 +35,9 @@ exports.getEditProduct = async(req, res, next) => {
 
 exports.getDeleteProduct = async(req, res, next) => {
     const { id } = req.params;
-    const product = await Product.find(id);
+    const product = await Product.findById(id);
+
+    if (!product) return res.redirect('/shop');
 
     res.render('pages/admin/delete-product', {
         title: 'Delete',
@@ -44,22 +48,34 @@ exports.getDeleteProduct = async(req, res, next) => {
 };
 
 exports.postAddProduct = async(req, res, next) => {
-  const { title, imageUrl, price, description } = req.body;
-  const product = new Product(title, price, description, imageUrl, req.user._id);
-  await product.save();
-  res.redirect('/shop/admin/products');
+    const { title, imageUrl, price, description } = req.body;
+    const userId = req.user._id;
+
+    const product = new Product({ title, price, description, imageUrl, userId });
+
+    await product.save();
+
+    res.redirect('/shop/admin/products');
 };
 
 exports.postEditProduct = async(req, res, next) => {
     const { productId, title, imageUrl, price, description } = req.body;
-    const product = new Product(title, price, description, imageUrl, req.user._id);
-    await Product.updateById(productId, product);
+
+    const product = await Product.findById(productId);
+
+    product.title = title;
+    product.imageUrl = imageUrl;
+    product.price = price;
+    product.description = description;
+
+    await product.save();
+
     res.redirect('/shop/admin/products');
 };
 
 exports.postDeleteProduct = async(req, res, next) => {
     const { productId } = req.body;
     await req.user.removeFromCart(productId);
-    await Product.deleteById(productId);
+    await Product.findByIdAndRemove(productId);
     res.redirect('/shop/admin/products');
 };

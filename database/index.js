@@ -5,11 +5,11 @@ const uri = `mongodb+srv://${MONGODB_USER}:${MONGODB_PASS}@cluster0.pjqyl.mongod
 
 exports.connectDb = (callback) => {
   MongoClient.connect(uri).then(client => {
-    console.log('Database connected.');
+    console.info('Database connected.');
     _db = client.db();
     callback();
   }).catch(err => {
-    console.log(err);
+    console.error(err);
   })
 }
 

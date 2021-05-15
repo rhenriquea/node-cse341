@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../../includes/header.ejs %>
+</head>
+
+<body>
+  <% include ../../includes/nav.ejs %>
+
+    <div class="container mt-3">
+
+      <% if(orders.length> 0) { %>
+
+        <% for(order of orders) { %>
+          <div>
+            <%= order._id %>
+            <%= order.products.forEach(({ product, quantity }) => { %>
+              <div>
+                <%= product.title %> ( <%= quantity %>)
+              </div>
+            <% }); %>
+          </div>
+        <% } %>
+
+      <% } else { %>
+        <div class="m-auto text-center text-muted">
+          <p>No orders yet.</p>
+        </div>
+      <% } %>
+    </div>
+</body>
+
+</html>

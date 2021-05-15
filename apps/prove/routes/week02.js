@@ -57,7 +57,7 @@ router.post('/addBooks', async (req, res, next) => {
         res.send(newBooks);
         res.end()
     } catch(e) {
-        console.log(e);
+        console.error(e);
     }
 })
 
@@ -71,7 +71,7 @@ router.get('/populateBooks', async (req, res, next) => {
         res.write('{ success: true }');
         res.end()
     } catch(e) {
-        console.log(e);
+        console.error(e);
     }
 })
 

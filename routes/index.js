@@ -46,9 +46,12 @@ routes.use('/prove', prove);
 // Shop App
 const shop = require('../apps/shop/routes/shop')
 const admin = require('../apps/shop/routes/admin')
+const auth = require('../apps/shop/routes/auth');
+const authenticated = require('../apps/shop/middlewares/authenticated');
 
 routes.use('/shop', shop)
-routes.use('/shop/admin', admin)
+routes.use('/shop/admin', admin, authenticated)
+routes.use('/shop/auth', auth)
 
 // 404 Page
 routes.use((req, res, next) => {

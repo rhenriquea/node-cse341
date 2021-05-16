@@ -10,16 +10,11 @@
 
     <div class="container mt-3">
 
-      <% if(orders.length> 0) { %>
+      <% if(orders.length > 0) { %>
 
         <% for(order of orders) { %>
           <div>
             <%= order._id %>
-            <%= order.products.forEach(({ product, quantity }) => { %>
-              <div>
-                <%= product.title %> ( <%= quantity %>)
-              </div>
-            <% }); %>
           </div>
         <% } %>
 

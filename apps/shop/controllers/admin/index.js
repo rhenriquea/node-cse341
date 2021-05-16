@@ -6,16 +6,14 @@ exports.getAdminProducts = async(req, res, next) => {
     res.render('pages/admin/products', {
         title: 'Add Product',
         path: '/shop/admin/products',
-        products,
-        cartCount: req.user.getCartProductsAmount()
+        products
     });
 };
 
 exports.getAddProduct = (req, res, next) => {
     res.render('pages/admin/add-product', {
         title: 'Add Product',
-        path: '/shop/admin/add-product',
-        cartCount: req.user.getCartProductsAmount()
+        path: '/shop/admin/add-product'
     });
 };
 
@@ -28,7 +26,6 @@ exports.getEditProduct = async(req, res, next) => {
     res.render('pages/admin/edit-product', {
         title: 'Edit -',
         path: '/shop/admin/edit-product',
-        cartCount: req.user.getCartProductsAmount(),
         product
     });
 };
@@ -42,7 +39,6 @@ exports.getDeleteProduct = async(req, res, next) => {
     res.render('pages/admin/delete-product', {
         title: 'Delete',
         path: '/shop/admin/delete-product',
-        cartCount: req.user.getCartProductsAmount(),
         product
     });
 };

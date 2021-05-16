@@ -19,18 +19,23 @@
     "release": "git push heroku main"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.4.4",
     "aws-sdk": "^2.896.0",
     "axios": "^0.21.1",
+    "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
+    "connect-flash": "^0.1.1",
+    "connect-mongodb-session": "^2.4.1",
+    "csurf": "^1.11.0",
     "dotenv": "^8.2.0",
     "ejs": "^2.5.6",
     "express": "^4.17.1",
     "express-handlebars": "^3.0.2",
+    "express-session": "^1.17.1",
     "mongodb": "^3.6.6",
     "mongoose": "^5.12.9",
     "nodemon": "^2.0.7",
-    "promise-queue": "^2.2.5",
-    "pug": "^2.0.4"
+    "promise-queue": "^2.2.5"
   },
   "devDependencies": {
     "request": "^2.81.0",

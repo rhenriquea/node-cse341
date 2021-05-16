@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <% include ../../includes/header.ejs %>
+  <link rel="stylesheet" href="/stylesheets/login.css">
+</head>
+
+<body>
+
+  <% include ../../includes/nav.ejs %>
+
+  <div class="form-container">
+    <form class="form-signin" action="/shop/auth/login" method="POST">
+      <div class="text-center mb-2">
+
+        <% if(error.length > 0) { %>
+          <div class="alert alert-danger" role="alert">
+            <%= error[0] %>
+          </div>
+        <%  } %>
+        <h1 class="navbar-brand p-1 text-white bg-info rounded font-weight-light mb-3"><%= title %></h1>
+      </div>
+  
+      <div class="form-label-group">
+        <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputEmail">Email address</label>
+      </div>
+      <input type="hidden" value="<%= csrfToken %>" name="_csrf">
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Reset Password</button>
+
+      <p class="mt-5 mt-3 text-muted text-center">&copy; Rafael Almeida <%= new Date().getFullYear() %></p>
+    </form>
+  </div>
+
+</body>
+
+</html>

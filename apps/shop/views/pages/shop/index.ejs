@@ -18,20 +18,37 @@
                 <div class="img-thumbnail" style="background-image: url(<%= product.imageUrl %>);" ></div>
                 <div class="card-body pb-3 pt-0 px-2">
                   <div class="d-flex justify-content-between mt-3">
-                    <a href="/shop/products/<%= product._id %>">
-                      <h3 class="m-0"><%= product.title %></h3>
-                    </a>
+                    <h3 class="m-0"><%= product.title %></h3>
                     <h4>
                       <span class="badge badge-success">$ <%= product.price %></span>
                     </h4>
                   </div>
-                  <p class="font-weight-light small"><%= product.description %>
+                  <p class="font-weight-light small"><%= product.description.substring(0,200) %>
+                    <% if(product.description.length > 200) { %>
+                      ... 
+                      <a href="/shop/products/<%= product._id %>">
+                        Read more
+                      </a>
+                      <% } %>
                     <br>
-                    
                   </p>
-                  <form class="text-right" action="/shop/cart/<%= product._id %>" method="POST">
-                    <button id="add-to-cart" class="btn btn-sm d-inline-flex btn-primary">Add <i class="material-icons">add</i></button>
-                  </form>
+
+                  <div class="row">
+                    <div class="col">
+                      <a class="btn btn-outline-info" href="/shop/products/<%= product._id %>">
+                        Details
+                      </a>
+                    </div>
+                    <div class="col text-right">
+                      <% if(isAuthenticated) { %>
+                      <form action="/shop/cart/<%= product._id %>" method="POST">
+                        <input type="hidden" value="<%= csrfToken %>" name="_csrf">
+                        <button id="add-to-cart" class="btn btn-outline d-inline-flex btn-primary">Add to cart <i class="material-icons">add</i></button>
+                      </form>
+                      <% } %>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>

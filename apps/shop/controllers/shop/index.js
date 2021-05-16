@@ -7,8 +7,7 @@ exports.getProducts = async(req, res, next) => {
     res.render('pages/shop', {
         title: 'Shop',
         path: '/shop',
-        products,
-        cartCount: req.user.getCartProductsAmount()
+        products
     });
 };
 
@@ -19,8 +18,7 @@ exports.getProductDetails = async(req, res, next) => {
     res.render('pages/shop/product-details', {
         title: 'Product Details',
         path: '/products',
-        product,
-        cartCount: req.user.getCartProductsAmount()
+        product
     });
 };
 
@@ -55,8 +53,7 @@ exports.getCart = async(req, res, next) => {
         title: 'Cart',
         path: '/shop/cart',
         products,
-        cartCount: req.user.getCartProductsAmount(),
-        cartTotal,
+        cartTotal
     });
 };
 
@@ -71,13 +68,13 @@ exports.postOrder = async(req, res, next) => {
         .populate('cart.items.productData')
         .execPopulate()
   
-    const { username, _id } = user;
+    const { email, _id } = user;
 
     const products = user.cart.items.map(({quantity, productData}) => {
         return { quantity, product: { ...productData._doc } };
     });
 
-    const order = new Order({ user: { username, userId: _id }, products });
+    const order = new Order({ user: { email, userId: _id }, products });
 
     await order.save();
 
@@ -87,13 +84,13 @@ exports.postOrder = async(req, res, next) => {
 };
 
 exports.getOrders = async(req, res, next) => {
+    if(!req.user) return res.send({status: 401, message: 'Unauthorized'});
+
     const orders = await Order.find({'user.userId': req.user._id});
     
     res.render('pages/shop/orders', {
         title: 'Orders',
         path: '/shop/orders',
-        products,
-        cartCount: req.user.getCartProductsAmount(),
         orders
     });
 };

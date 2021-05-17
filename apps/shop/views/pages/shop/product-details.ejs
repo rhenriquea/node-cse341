@@ -8,9 +8,28 @@
   <% include ../../includes/nav.ejs %>
 
     <div class="container mt-3">
-      <img class="img-thumbnail" src="<%= product.imageUrl %>" alt="<%= product.title %>">
-      <h1><%= product.title %></h1>
-      <p><%= product.description %></p>
+
+
+      <a href="/shop" class="d-flex font-weight-bold text-primary mb-3">
+        <i class="material-icons">arrow_back</i>
+        <span>Back</span>
+      </a>
+
+      <div class="d-flex border p-3">
+        <img height="300" width="300" class="img-thumbnail" src="<%= product.imageUrl %>" alt="<%= product.title %>">
+        <div class="card-body">
+          <h1 class="display-4"><%= product.title %></h1>
+          <h4 class="text-success font-weight-bolder">$ <%= product.price %></h4>
+          <p class="lead"><%= product.description %></p>
+
+          <% if(isAuthenticated) { %>
+            <form action="/shop/cart/<%= product._id %>" method="POST">
+              <input type="hidden" value="<%= csrfToken %>" name="_csrf">
+              <button id="add-to-cart" class="btn btn-outline-primary d-inline-flex">Add to cart <i class="material-icons">add</i></button>
+            </form>
+          <% } %>
+        </div>
+      </div>
 
 
 

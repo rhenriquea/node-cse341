@@ -13,6 +13,7 @@
       <p class="m-0">Are you sure you want to delete <%= product.title %> product?</p>
       <small class="text-danger">This action is irreversible.</small>
       <input type="hidden" name="productId" value="<%= product._id %>">
+      <input type="hidden" value="<%= csrfToken %>" name="_csrf">
       <div class="text-right">
         <a href="/shop/admin/products" class="btn btn-seconday" type="button">Cancel</a>
         <button type="submit" class="btn btn-danger" type="button">Confirm</button>

@@ -1,22 +1,15 @@
 const router = require('express').Router();
 
-const { 
-  getProducts, 
-  getProductDetails, 
-  addToCart, 
-  getCart, 
-  deleteFromCart,
-  postOrder
+const controller = require('../../controllers/shop');
+const authenticated = require('../../middlewares/authenticated');
 
-} = require('../../controllers/shop');
+router.get('/', controller.getProducts);
+router.get('/products/:id', controller.getProductDetails);
 
-router.get('/', getProducts)
-router.get('/products/:id', getProductDetails)
-router.get('/cart', getCart)
-//router.get('/orders', deleteFromCart)
-
-router.post('/cart/:id', addToCart)
-router.post('/cart/delete/:id', deleteFromCart)
-router.post('/create-order', postOrder)
+router.get('/cart', controller.getCart, authenticated);
+router.get('/orders', controller.getOrders, authenticated);
+router.post('/cart/:id', controller.addToCart, authenticated);
+router.post('/cart/delete/:id', controller.deleteFromCart, authenticated);
+router.post('/create-order', controller.postOrder, authenticated);
 
 module.exports = router;

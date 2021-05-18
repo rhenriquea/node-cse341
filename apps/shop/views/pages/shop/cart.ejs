@@ -30,6 +30,7 @@
               <div class="d-flex flex-column justify-content-between">
                 <span class="text-muted">$<%= product.total %></span>
                 <form class="text-right" action="/shop/cart/delete/<%= product._id %>" method="POST">
+                  <input type="hidden" value="<%= csrfToken %>" name="_csrf">
                   <button class="btn btn-sm btn-danger d-inline-flex" type="submit">
                     <i class="material-icons">delete</i>
                   </button>
@@ -44,9 +45,12 @@
             </li>
           </ul>
 
-          <button class="btn btn-success btn-block">
-            Proceed to Checkout
-          </button>
+          <form action="/shop/create-order" method="POST">
+            <input type="hidden" value="<%= csrfToken %>" name="_csrf">
+            <button type="submit" class="btn btn-success btn-block">
+              Place Order
+            </button>
+          </form>
         </div>
 
       <% } else { %>

@@ -1,7 +1,9 @@
 const Product = require('../../models/product');
 
 exports.getAdminProducts = async (req, res) => {
-  const products = await Product.find().populate('userId');
+  const products = await Product.find({ userId: req.user._id }).populate(
+    'userId'
+  );
 
   res.render('pages/admin/products', {
     title: 'Add Product',
@@ -65,6 +67,10 @@ exports.postEditProduct = async (req, res) => {
 
   const product = await Product.findById(productId);
 
+  if (product.userId.toString() !== req.user._id.toString()) {
+    return res.redirect('/shop');
+  }
+
   product.title = title;
   product.imageUrl = imageUrl;
   product.price = price;
@@ -78,6 +84,6 @@ exports.postEditProduct = async (req, res) => {
 exports.postDeleteProduct = async (req, res) => {
   const { productId } = req.body;
   await req.user.removeFromCart(productId);
-  await Product.findByIdAndRemove(productId);
+  await Product.deleteOne({ _id: productId, userId: req.user._id });
   res.redirect('/shop/admin/products');
 };

@@ -1,6 +1,6 @@
 const { randomBytes } = require('crypto');
-
 const { hash, compare } = require('bcryptjs');
+const { validationResult } = require('express-validator');
 
 const User = require('../../models/user');
 
@@ -9,11 +9,24 @@ exports.getLogin = async (req, res) => {
     title: 'Login',
     path: '/shop/auth/login',
     error: req.flash('error'),
+    validationErrors: [],
+    oldInput: { email: '', password: '' },
   });
 };
 
 exports.postLogin = async (req, res) => {
   const { email, password } = req.body;
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).render('pages/auth/login', {
+      title: 'Login',
+      path: '/shop/auth/login',
+      error: errors.array().map((e) => e.msg),
+      validationErrors: errors.array(),
+      oldInput: { email, password },
+    });
+  }
 
   const user = await User.findOne({ email });
 
@@ -48,12 +61,27 @@ exports.getSignup = async (req, res) => {
     title: 'Signup',
     path: '/shop/auth/signup',
     error: req.flash('error'),
+    validationErrors: [],
+    oldInput: { email: '', password: '', confirmPassword: '' },
     success: false,
   });
 };
 
-exports.postSignup = async (req, res) => {
-  const { email, password } = req.body;
+exports.postSignup = async (req, res, next) => {
+  const { email, password, confirmPassword } = req.body;
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).render('pages/auth/signup', {
+      title: 'Signup',
+      path: '/shop/auth/signup',
+      error: errors.array().map((e) => e.msg),
+      validationErrors: errors.array(),
+      success: false,
+      oldInput: { email, password, confirmPassword },
+    });
+  }
 
   const user = await User.findOne({ email });
 
@@ -70,14 +98,21 @@ exports.postSignup = async (req, res) => {
     cart: { items: [] },
   });
 
-  await newUser.save();
+  try {
+    await newUser.save();
 
-  res.render('pages/auth/signup', {
-    title: 'Signup',
-    path: '/shop/auth/signup',
-    error: [],
-    success: true,
-  });
+    res.render('pages/auth/signup', {
+      title: 'Signup',
+      path: '/shop/auth/signup',
+      error: [],
+      success: true,
+      oldInput: { email, password, confirmPassword },
+    });
+  } catch (e) {
+    const err = new Error(e);
+    err.httpStatusCode = 500;
+    return next(err);
+  }
 };
 
 exports.getReset = async (req, res) => {
@@ -88,7 +123,7 @@ exports.getReset = async (req, res) => {
   });
 };
 
-exports.postResetPassword = async (req, res) => {
+exports.postResetPassword = async (req, res, next) => {
   const { email } = req.body;
   randomBytes(32, async (err, buffer) => {
     if (err) return res.redirect('/shop/auth/reset');
@@ -104,9 +139,16 @@ exports.postResetPassword = async (req, res) => {
     user.resetToken = token;
     // Current date + 1 hour
     user.resetTokenExpiration = new Date() + 3600000;
-    user.save();
 
-    res.redirect('/shop');
+    try {
+      await user.save();
+
+      res.redirect('/shop');
+    } catch (e) {
+      const error = new Error(e);
+      error.httpStatusCode = 500;
+      return next(error);
+    }
 
     /*     await sgMail.send({
       to: email,

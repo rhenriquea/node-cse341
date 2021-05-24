@@ -6,10 +6,10 @@ const authenticated = require('../../middlewares/authenticated');
 router.get('/', controller.getProducts);
 router.get('/products/:id', controller.getProductDetails);
 
-router.get('/cart', controller.getCart, authenticated);
-router.get('/orders', controller.getOrders, authenticated);
-router.post('/cart/:id', controller.addToCart, authenticated);
-router.post('/cart/delete/:id', controller.deleteFromCart, authenticated);
-router.post('/create-order', controller.postOrder, authenticated);
+router.get('/cart', authenticated, controller.getCart);
+router.get('/orders', authenticated, controller.getOrders);
+router.post('/cart/:id', authenticated, controller.addToCart);
+router.post('/cart/delete/:id', authenticated, controller.deleteFromCart);
+router.post('/create-order', authenticated, controller.postOrder);
 
 module.exports = router;

@@ -54,12 +54,24 @@ app.use(
 app.use(csrf());
 app.use(flash());
 
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isAuthenticated;
+  res.locals.csrfToken = req.csrfToken();
+  res.locals.cartCount = (req.user && req.user.getCartProductsAmount()) || 0;
+  next();
+});
+
 // Enrich user with Mongoose model
 app.use(async (req, res, next) => {
   if (!req.session.user) return next();
-  const user = await User.findById(req.session.user._id);
-  req.user = user;
-  next();
+  try {
+    const user = await User.findById(req.session.user._id);
+    if (!user) return next();
+    req.user = user;
+    next();
+  } catch (e) {
+    next(new Error(e));
+  }
 });
 
 // View Logic
@@ -69,13 +81,6 @@ app.set('views', [
   `${__dirname}/apps/shop/views`,
 ]);
 app.set('view engine', 'ejs');
-
-app.use((req, res, next) => {
-  res.locals.isAuthenticated = req.session.isAuthenticated;
-  res.locals.csrfToken = req.csrfToken();
-  res.locals.cartCount = (req.user && req.user.getCartProductsAmount()) || 0;
-  next();
-});
 
 // Routes
 app.use('/', routes);

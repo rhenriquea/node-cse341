@@ -11,7 +11,7 @@
   <% include ../../includes/nav.ejs %>
 
   <div class="form-container">
-    <form class="form-signin" action="/shop/auth/signup" method="POST">
+    <form class="form-signin" action="/shop/auth/signup" method="POST" novalidate>
       <div class="text-center mb-4">
         <% if(error.length > 0) { %>
           <div class="alert alert-danger" role="alert">
@@ -29,17 +29,37 @@
       </div>
   
       <div class="form-label-group">
-        <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
+        <input 
+          type="email" 
+          id="inputEmail" 
+          name="email" 
+          class="form-control <%= validationErrors.find(e => e.param === 'email') ? 'input-error' : '' %>"
+          placeholder="Email address"
+          value="<%= oldInput.email %>"
+          autofocus>
         <label for="inputEmail">Email address</label>
       </div>
   
       <div class="form-label-group">
-        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+        <input 
+          type="password" 
+          id="inputPassword"
+          name="password"
+          class="form-control <%= validationErrors.find(e => e.param === 'password') ? 'input-error' : '' %>"
+          placeholder="Password" 
+          value="<%= oldInput.password %>">
         <label for="inputPassword">Password</label>
       </div>
 
+      <%= validationErrors.find(e => e.param === 'email') ? 'input-error' : '' %>
       <div class="form-label-group">
-        <input type="password" id="inputConfirmPassword" name="confirmPassword" class="form-control" placeholder="Confirm Password" required>
+        <input 
+          type="password" 
+          id="inputConfirmPassword"
+          name="confirmPassword"
+          class="form-control <%= validationErrors.find(e => e.param === 'confirmPassword') ? 'input-error' : '' %>"
+          placeholder="Confirm Password" 
+          value="<%= oldInput.confirmPassword %>">
         <label for="inputConfirmPassword">Confirm Password</label>
       </div>
   

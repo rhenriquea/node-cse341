@@ -11,7 +11,7 @@
   <% include ../../includes/nav.ejs %>
 
   <div class="form-container">
-    <form class="form-signin" action="/shop/auth/login" method="POST">
+    <form class="form-signin" action="/shop/auth/login" method="POST" novalidate>
       <div class="text-center mb-2">
 
         <% if(error.length > 0) { %>
@@ -23,12 +23,27 @@
       </div>
   
       <div class="form-label-group">
-        <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
+        <input 
+          type="email" 
+          id="inputEmail" 
+          name="email" 
+          value="<%= oldInput.email %>"
+          class="form-control <%= validationErrors.find(e => e.param === 'email') ? 'input-error' : '' %>"
+          placeholder="Email address" 
+          required 
+          autofocus>
         <label for="inputEmail">Email address</label>
       </div>
   
       <div class="form-label-group">
-        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+        <input 
+          type="password" 
+          id="inputPassword" 
+          name="password" 
+          value="<%= oldInput.password %>"
+          class="form-control <%= validationErrors.find(e => e.param === 'password') ? 'input-error' : '' %>"
+          placeholder="Password" 
+          required>
         <label for="inputPassword">Password</label>
       </div>
   

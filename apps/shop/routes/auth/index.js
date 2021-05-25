@@ -14,7 +14,7 @@ router.post(
     body('email')
       .isEmail()
       .withMessage('Invalid email address')
-      .normalizeEmail(),
+      .normalizeEmail({ gmail_remove_dots: false }),
     body(
       'password',
       'Please enter a password with only numbers, text and at least 5 characters'
@@ -32,7 +32,7 @@ router.post(
     body('email')
       .isEmail()
       .withMessage('Invalid email address')
-      .normalizeEmail(),
+      .normalizeEmail({ gmail_remove_dots: false }),
     body(
       'password',
       'Please enter a password with only numbers, text and at least 5 characters'
@@ -51,7 +51,36 @@ router.post(
   ],
   controller.postSignup
 );
-router.post('/reset', controller.postResetPassword);
-router.post('/new-password', controller.postNewPassword);
+router.post(
+  '/reset',
+  [
+    body('email')
+      .isEmail()
+      .withMessage('Invalid email address')
+      .normalizeEmail({ gmail_remove_dots: false }),
+  ],
+  controller.postResetPassword
+);
+router.post(
+  '/new-password',
+  [
+    body(
+      'password',
+      'Please enter a password with only numbers, text and at least 5 characters'
+    )
+      .isLength({ min: 5 })
+      .isAlphanumeric()
+      .trim(),
+    body('confirmPassword')
+      .trim()
+      .custom((value, { req }) => {
+        if (value !== req.body.password) {
+          throw new Error('Passwords are not equal. Make sure they match');
+        }
+        return true;
+      }),
+  ],
+  controller.postNewPassword
+);
 
 module.exports = router;

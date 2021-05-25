@@ -28,10 +28,10 @@ div.img-thumbnail {
   box-shadow: 0 0 0 0.2rem #bd21301c;
 }
 
-/* form:invalid button[type="submit"] {
+form:invalid button[type="submit"].validate {
   pointer-events: none;
   opacity: 0.5;
-}  */
+} 
 
 .avatar {
   border-radius: 50%;

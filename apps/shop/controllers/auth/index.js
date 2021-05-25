@@ -1,6 +1,9 @@
 const { randomBytes } = require('crypto');
 const { hash, compare } = require('bcryptjs');
 const { validationResult } = require('express-validator');
+const sgMail = require('@sendgrid/mail');
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const User = require('../../models/user');
 
@@ -120,6 +123,7 @@ exports.getReset = async (req, res) => {
   res.render('pages/auth/reset', {
     title: 'Reset Password',
     path: '/shop/auth/reset',
+    success: [],
     error: req.flash('error'),
   });
 };
@@ -138,37 +142,57 @@ exports.postResetPassword = async (req, res, next) => {
     }
 
     user.resetToken = token;
+
     // Current date + 1 hour
-    user.resetTokenExpiration = new Date() + 3600000;
+    const date = new Date();
+    user.resetTokenExpiration = date.setHours(date.getHours() + 1);
 
     try {
       await user.save();
-
-      res.redirect('/shop');
     } catch (e) {
       const error = new Error(e);
       error.httpStatusCode = 500;
       return next(error);
     }
 
-    /*     await sgMail.send({
-      to: email,
-      from: 'shop@cse341.com',
-      subject: 'Password reset',
-      html: `
-       <p> You have requested a password reset </p>
-       <p> Click the link below to reset your password </p>
-       <a href="http://localhost:3000/shop/auth/reset/${token}">Reset password</a>
-      `,
-    }); */
+    try {
+      await sgMail.send({
+        to: email,
+        from: `${process.env.SENDER_EMAIL}`,
+        subject: 'Password reset',
+        html: `
+         <p> You have requested a password reset </p>
+         <p> Click the link below to reset your password </p>
+         <p>If the link doesn't work, copy and paste on your browser</p>
+         <a href="${process.env.DOMAIN}/shop/auth/reset/${token}">
+          ${process.env.DOMAIN}/shop/auth/reset/${token}
+         </a>
+        `,
+      });
+
+      req.flash(
+        'success',
+        'Check your email to get the reset link. You may check your SPAM box in case you do not find in your inbox'
+      );
+
+      res.render('pages/auth/reset', {
+        title: 'Reset Password',
+        path: '/shop/auth/reset',
+        error: [],
+        success: req.flash('success'),
+      });
+    } catch (e) {
+      console.log(e.response.body);
+    }
   });
 };
 
 exports.getNewPassword = async (req, res) => {
   const { token } = req.params;
+
   const user = await User.findOne({
     resetToken: token,
-    resetTokenExpiration: { $gt: Date.now() },
+    resetTokenExpiration: { $gte: new Date() },
   });
 
   if (!user) {
@@ -181,11 +205,27 @@ exports.getNewPassword = async (req, res) => {
     error: req.flash('error'),
     userId: user._id.toString(),
     passwordToken: token,
+    validationErrors: [],
+    oldInput: { password: '', confirmPassword: '' },
   });
 };
 
 exports.postNewPassword = async (req, res) => {
-  const { password, userId, passwordToken } = req.body;
+  const { password, confirmPassword, userId, passwordToken } = req.body;
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).render('pages/auth/new-password', {
+      title: 'New Password',
+      path: '/shop/auth/new-password',
+      userId,
+      passwordToken,
+      error: errors.array().map((e) => e.msg),
+      validationErrors: errors.array(),
+      oldInput: { password, confirmPassword },
+    });
+  }
 
   const user = await User.findOne({
     resetToken: passwordToken,

@@ -89,8 +89,9 @@ exports.postAddProduct = async (req, res, next) => {
     return res.status(422).render('pages/admin/add-product', {
       title: 'Add Product',
       path: '/shop/admin/add-product',
+      cartCount: (req.user && req.user.getCartProductsAmount()) || 0,
       error: errors.array().map((e) => e.msg),
-      validatiorErrors: errors.array(),
+      validationErrors: errors.array(),
       product: {
         title,
         imageUrl,
@@ -128,7 +129,8 @@ exports.postEditProduct = async (req, res, next) => {
       title: 'Edit -',
       path: '/shop/admin/edit-product',
       error: errors.array().map((e) => e.msg),
-      validatiorErrors: errors.array(),
+      cartCount: (req.user && req.user.getCartProductsAmount()) || 0,
+      validationErrors: errors.array(),
       product: {
         _id: productId,
         title,

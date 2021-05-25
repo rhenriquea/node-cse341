@@ -105,6 +105,7 @@ exports.postSignup = async (req, res, next) => {
       title: 'Signup',
       path: '/shop/auth/signup',
       error: [],
+      validationErrors: [],
       success: true,
       oldInput: { email, password, confirmPassword },
     });

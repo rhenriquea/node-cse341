@@ -9,6 +9,7 @@ exports.getAdminProducts = async (req, res, next) => {
     res.render('pages/admin/products', {
       title: 'Admin Products',
       path: '/shop/admin/products',
+      cartCount: (req.user && req.user.getCartProductsAmount()) || 0,
       products,
     });
   } catch (e) {
@@ -22,8 +23,9 @@ exports.getAddProduct = (req, res) => {
   res.render('pages/admin/add-product', {
     title: 'Add Product',
     path: '/shop/admin/add-product',
-    error: undefined,
-    validatiorErrors: [],
+    cartCount: (req.user && req.user.getCartProductsAmount()) || 0,
+    error: [],
+    validationErrors: [],
     product: {
       title: '',
       imageUrl: '',
@@ -44,8 +46,9 @@ exports.getEditProduct = async (req, res, next) => {
     res.render('pages/admin/edit-product', {
       title: 'Edit -',
       path: '/shop/admin/edit-product',
-      error: undefined,
-      validatiorErrors: [],
+      cartCount: (req.user && req.user.getCartProductsAmount()) || 0,
+      error: [],
+      validationErrors: [],
       product,
     });
   } catch (e) {
@@ -66,6 +69,7 @@ exports.getDeleteProduct = async (req, res, next) => {
     res.render('pages/admin/delete-product', {
       title: 'Delete',
       path: '/shop/admin/delete-product',
+      cartCount: (req.user && req.user.getCartProductsAmount()) || 0,
       product,
     });
   } catch (e) {

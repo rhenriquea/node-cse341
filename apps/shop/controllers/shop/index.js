@@ -7,6 +7,7 @@ exports.getProducts = async (req, res) => {
   res.render('pages/shop', {
     title: 'Shop',
     path: '/shop',
+    cartCount: (req.user && req.user.getCartProductsAmount()) || 0,
     products,
   });
 };
@@ -18,6 +19,7 @@ exports.getProductDetails = async (req, res) => {
   res.render('pages/shop/product-details', {
     title: 'Product Details',
     path: '/products',
+    cartCount: (req.user && req.user.getCartProductsAmount()) || 0,
     product,
   });
 };
@@ -50,6 +52,7 @@ exports.getCart = async (req, res) => {
   res.render('pages/shop/cart', {
     title: 'Cart',
     path: '/shop/cart',
+    cartCount: (req.user && req.user.getCartProductsAmount()) || 0,
     products,
     cartTotal,
   });
@@ -87,6 +90,7 @@ exports.getOrders = async (req, res) => {
   res.render('pages/shop/orders', {
     title: 'Orders',
     path: '/shop/orders',
+    cartCount: (req.user && req.user.getCartProductsAmount()) || 0,
     orders,
   });
 };

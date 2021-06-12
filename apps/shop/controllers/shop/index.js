@@ -1,14 +1,36 @@
 const Product = require('../../models/product');
 const Order = require('../../models/order');
 
+const ITEMS_PER_PAGE = 2;
+
 exports.getProducts = async (req, res) => {
-  const products = await Product.find();
+  let { page } = req.query;
+  page = +page || 1;
+
+  const productsCount = await Product.find().countDocuments();
+
+  const products = await Product.find()
+    .skip((page - 1) * ITEMS_PER_PAGE)
+    .limit(ITEMS_PER_PAGE);
+
+  const hasNextPage = ITEMS_PER_PAGE * page < productsCount;
+  const hasPreviousPage = page > 1;
+  const nextPage = page + 1;
+  const previousPage = page - 1;
+  const lastPage = Math.ceil(productsCount / ITEMS_PER_PAGE);
 
   res.render('pages/shop', {
     title: 'Shop',
     path: '/shop',
     cartCount: (req.user && req.user.getCartProductsAmount()) || 0,
     products,
+    productsCount,
+    currentPage: page,
+    hasNextPage,
+    hasPreviousPage,
+    nextPage,
+    previousPage,
+    lastPage,
   });
 };
 

@@ -29,6 +29,12 @@ routes.get('/', (req, res) => {
       description: 'A sample e-commerce project using Node.js and MongoDB',
       path: '/shop',
     },
+    {
+      title: 'REST Pokeapi',
+      subtitle: '',
+      description: 'A REST API to make pagination for a pokemon API',
+      path: '/prove/week09',
+    },
   ];
 
   res.render('pages', {

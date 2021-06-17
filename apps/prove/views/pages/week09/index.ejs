@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../../includes/header.ejs %>
+  <k src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></k>
+  <link rel="stylesheet" href="/stylesheets/week03.css"></link>
+</head>
+
+<body>
+  <% include ../../includes/nav.ejs %>
+  <div class="container mt-5">
+    
+    <ul class="list-group mb-5">
+      <% for(pokemon of pokemons) { %>
+        <li class="list-group-item d-flex align-items-center">
+          <div>
+            <h4 class="m-0 text-capitalize"><%= pokemon.name %></h4>
+          </div>
+        </li>
+      <% } %>
+    </ul>
+
+    <section>
+      <p class="text-center">
+        Page <%= currentPage %> of <%= lastPage %>
+      </p>
+
+      <div class="d-flex justify-content-center">
+        <nav>
+          <ul class="pagination">
+            <% if (currentPage !== 1 && previousPage !== 1) { %>
+              <li class="page-item">
+                <a class="page-link" href="/prove/week09?page=1">&#xab; First</a>
+              </li>
+            <% } %>
+            <% if (hasPreviousPage) { %>
+              <li class="page-item">
+                <a class="page-link" href="/prove/week09?page=<%= previousPage %>">
+                  &#x2039; Prev 
+                </a>
+              </li>
+            <% } %>
+            <% if (hasNextPage) { %>
+              <li class="page-item">
+                <a class="page-link" href="/prove/week09?page=<%= nextPage %>">
+                  &#x203A; Next
+                </a>
+              </li>
+            <% } %>
+            <% if (lastPage !== currentPage && nextPage !== lastPage) { %>
+              <li class="page-item">
+                <a class="page-link" href="/prove/week09?page=<%= lastPage %>">
+                  &#xbb; Last
+                </a>
+              </li>
+            <% } %>
+          </ul>
+        </nav>
+      </div>
+
+    </section>
+
+  </div>
+</body>
+
+</html>

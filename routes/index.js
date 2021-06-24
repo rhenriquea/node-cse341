@@ -31,9 +31,16 @@ routes.get('/', (req, res) => {
     },
     {
       title: 'REST Pokeapi',
-      subtitle: '',
+      subtitle: 'REST API',
       description: 'A REST API to make pagination for a pokemon API',
       path: '/prove/week09',
+    },
+    {
+      title: 'Week 10 Prove: Assignment',
+      subtitle: 'REST API',
+      description:
+        'Using dummy data to create an update capability using axios and asynchronous JavaScript',
+      path: '/prove/week10',
     },
   ];
 

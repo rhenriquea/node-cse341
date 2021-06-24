@@ -1,0 +1,40 @@
+{
+    "avengers": [
+        {
+            "name": "Tony Stark",
+            "heroName": "Iron Man",
+            "age": 45,
+            "publisher": "Marvel Comics"
+        },
+        {
+            "name": "Steve Rogers",
+            "heroName": "Captain America",
+            "age": 93,
+            "publisher": "Marvel Comics"
+        },
+        {
+            "name": "Thor Odinson",
+            "heroName": "Thor",
+            "age": 1500,
+            "publisher": "Marvel Comics"
+        },
+        {
+            "name": "Bruce Banner",
+            "heroName": "Hulk",
+            "age": 52,
+            "publisher": "Marvel Comics"
+        },
+        {
+            "name": "Natasha Romanova",
+            "heroName": "Black Widow",
+            "age": 32,
+            "publisher": "Marvel Comics"
+        },
+        {
+            "name": "Clint Barton",
+            "heroName": "Hawkeye",
+            "age": 40,
+            "publisher": "Marvel Comics"
+        }
+    ]
+}

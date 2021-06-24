@@ -7,6 +7,7 @@ proveRoutes
   .use('/week02', require('./week02'))
   .use('/week03', require('./week03'))
   .use('/week09', require('./week09'))
+  .use('/week10', require('./week10'))
   .get('/', (req, res) => {
     res.render('pages/prove', {
       title: 'Prove',

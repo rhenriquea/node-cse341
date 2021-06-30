@@ -1,6 +1,5 @@
 require('dotenv').config();
 
-const express = require('express');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const mongoose = require('mongoose');
@@ -8,6 +7,14 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
+
+const express = require('express');
+
+const app = express();
+const http = require('http');
+const { Server } = require('socket.io');
+
+const server = http.createServer(app);
 
 const { MONGODB_USER, MONGODB_PASS, DB_NAME, SESSION_KEY } = process.env;
 
@@ -19,8 +26,22 @@ const User = require('./apps/shop/models/user');
 
 const routes = require('./routes');
 
-const app = express();
 const PORT = process.env.PORT || 5000;
+
+const connectSocketIO = () => {
+  const io = new Server(server);
+  io.on('connection', (socket) => {
+    console.log('Client connected');
+
+    socket.on('new-character', () => {
+      socket.broadcast.emit('update-list');
+    });
+
+    socket.on('disconnect', () => {
+      console.log('Client disconnected');
+    });
+  });
+};
 
 app.use(compression());
 
@@ -89,7 +110,8 @@ mongoose
   .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.info('Database Connected');
-    app.listen(PORT, () =>
+    server.listen(PORT, () =>
       console.info(`Listening on http://localhost:${PORT}`)
     );
+    connectSocketIO();
   });

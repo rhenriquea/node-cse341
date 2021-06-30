@@ -3,15 +3,18 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 
+const socket = io();
+
 const populateList = async () => {
   const heroesList = document.getElementById('heroesList');
 
   try {
-    const { data } = await axios.get('/prove/week10/fetchAll');
+    const res = await fetch('/prove/week10/fetchAll');
+    const data = await res.json();
 
     while (heroesList.firstChild) heroesList.firstChild.remove();
 
-    data.avengers.forEach((avenger) => {
+    (data || []).avengers.forEach((avenger) => {
       const li = document.createElement('li');
       li.classList.value = ['list-group-item'];
       li.innerHTML = `
@@ -40,36 +43,49 @@ const showMessage = (type, { title, message }) => {
   }, 3000);
 };
 
+// Repopulate the list when the server broadcasts an event
+socket.on('update-list', () => {
+  populateList();
+});
+
 const addName = async () => {
   const URL = '/prove/week10/addName';
-  const headers = { 'Content-Type': 'application/json' };
-  const form = document.getElementById('heroForm');
-  const formData = new FormData(form);
+  const formEL = document.getElementById('heroForm');
+  const formData = new FormData(formEL);
+  const payload = {};
   const messageConfig = { title: '', message: '' };
+  let form = {};
 
-  // Prepare dynamic payload (including _csrf)
-  let payload = {};
+  // Prepare dynamic form (including _csrf)
   for (const entry of formData.entries()) {
-    payload = { ...payload, [entry[0]]: entry[1] };
+    form = { ...form, [entry[0]]: entry[1] };
   }
-  payload = JSON.stringify(payload);
+  form = JSON.stringify(form);
 
   try {
-    await axios.post(URL, payload, { headers });
-    populateList();
+    // Prepare request
+    payload.method = 'POST';
+    payload.headers = { 'Content-Type': 'application/json' };
+    payload.body = form;
+
+    await fetch(URL, payload);
+
     messageConfig.title = 'Success';
     messageConfig.message = `Successfully added 
-    <strong>${JSON.parse(payload).name}</strong> 
+    <strong>${JSON.parse(form).name}</strong> 
     to the list`;
     showMessage('success', messageConfig);
+    populateList();
+    socket.emit('new-character');
   } catch (error) {
+    console.error(error);
     messageConfig.title = error.response.status;
     messageConfig.message = error.response.data;
     showMessage('error', messageConfig);
   }
 
   // Reset Form
-  form.reset();
+  formEL.reset();
 };
 
 // Prepare listeners

@@ -90,7 +90,8 @@ function newMessage({ text, time, author }) {
 // Grab form values and emit event
 const postMessage = (e) => {
   e.preventDefault();
-  const text = document.getElementById('message').value.trim();
+  const messageEl = document.getElementById('message');
+  const text = messageEl.value.trim();
   const author = document.getElementById('user').value;
   const time = getTime();
 
@@ -99,6 +100,7 @@ const postMessage = (e) => {
   newMessage(data);
 
   messageEl.value = '';
+
   conversation.scrollTop = conversation.scrollHeight;
 };
 

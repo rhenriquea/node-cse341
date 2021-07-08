@@ -65,13 +65,16 @@ io.sockets.on('connection', (socket) => {
     .on('disconnect', () => {
       console.log('Client disconnected');
       const { chatUser } = socket.request.session;
-      const text = `${chatUser} has left the group.`;
 
-      socket.broadcast.emit('new-message', {
-        text,
-        time: getTime(),
-        author: 'Admin',
-      });
+      if (chatUser) {
+        const text = `${chatUser} has left the group.`;
+
+        socket.broadcast.emit('new-message', {
+          text,
+          time: getTime(),
+          author: 'Admin',
+        });
+      }
     })
     .on('new-character', () => {
       socket.broadcast.emit('update-list');

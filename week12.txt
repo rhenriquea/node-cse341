@@ -2,7 +2,7 @@ After completing the assignment, be sure to push to Github and Heroku.
 Please answer the questions in this text file and submit it to I-Learn.
 
 1. Copy and paste the URL for your web application (e.g., Heroku):
-https://cse341app.herokuapp.com/prove/week10
+https://cse341app.herokuapp.com/prove/week12
 
 2. Copy and paste the URL for your source code repository (e.g., GitHub):
 https://github.com/rhenriquea/node-cse341
@@ -11,7 +11,7 @@ https://github.com/rhenriquea/node-cse341
 - Socket.io update different clients list on different tabs
 
 4. Briefly describe any pieces of the assignment that are not yet working correctly.
-- Everything should be working as expected.
+- Since it shares the same session, sometimes you get `undefined has logged out` when opening a new session.
 
 5. Briefly describe the "coolest" thing you learned while completing this assignment.
 - I never had used socket.io before, it was interesting to learn and understand how it works.
@@ -23,8 +23,8 @@ https://github.com/rhenriquea/node-cse341
    1 - Some attempt was made
    2 - Developing, but significantly deficient
    3 - Slightly deficient, but still mostly adequate
-   4 - Meets requirements
-   -> 5 - Shows creativity and excels above and beyond requirements
+   -> 4 - Meets requirements
+   5 - Shows creativity and excels above and beyond requirements
 
 8. Provide a brief justification (1-2 sentences) for selecting that category.
-I have added extra fields and error message feedback for the user, plus a bit of styling and secured the form with _csrf.
+I have met the requirements and added a Whatsapp styling to it, but I decided to prioritize the Team project instead of trying to fix the bug in the session management. 

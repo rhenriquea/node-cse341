@@ -5,8 +5,8 @@ const compression = require('compression');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
-const csrf = require('csurf');
-const flash = require('connect-flash');
+// const csrf = require('csurf');
+// const flash = require('connect-flash');
 
 const express = require('express');
 
@@ -15,6 +15,7 @@ const http = require('http');
 const { Server } = require('socket.io');
 
 const server = http.createServer(app);
+const io = new Server(server);
 
 const { MONGODB_USER, MONGODB_PASS, DB_NAME, SESSION_KEY } = process.env;
 
@@ -28,20 +29,67 @@ const routes = require('./routes');
 
 const PORT = process.env.PORT || 5000;
 
-const connectSocketIO = () => {
-  const io = new Server(server);
-  io.on('connection', (socket) => {
-    console.log('Client connected');
-
-    socket.on('new-character', () => {
-      socket.broadcast.emit('update-list');
-    });
-
-    socket.on('disconnect', () => {
-      console.log('Client disconnected');
-    });
-  });
+const getTime = () => {
+  const date = new Date();
+  const hours = date.getHours().toString().padStart(2, '0');
+  const mins = date.getMinutes().toString().padStart(2, '0');
+  return `${hours}:${mins}`;
 };
+
+// Session Config
+const store = new MongoDBStore({
+  uri,
+  collection: 'sessions',
+});
+
+const sessionMiddleware = session({
+  secret: SESSION_KEY,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: false, // Permit access to client session
+  },
+  store,
+});
+
+io.use((socket, next) => {
+  sessionMiddleware(socket.request, socket.request.res || {}, next);
+});
+
+app.use(sessionMiddleware);
+
+io.sockets.on('connection', (socket) => {
+  console.log('Client connected');
+
+  socket
+    .on('disconnect', () => {
+      console.log('Client disconnected');
+      const { chatUser } = socket.request.session;
+      const text = `${chatUser} has left the group.`;
+
+      socket.broadcast.emit('new-message', {
+        text,
+        time: getTime(),
+        author: 'Admin',
+      });
+    })
+    .on('new-character', () => {
+      socket.broadcast.emit('update-list');
+    })
+    .on('user-login', ({ username, time }) => {
+      const text = `${username} has logged on.`;
+      socket.broadcast.emit('new-message', {
+        text,
+        time,
+        author: 'Admin',
+      });
+    })
+    .on('message', (data) => {
+      socket.broadcast.emit('new-message', {
+        ...data,
+      });
+    });
+});
 
 app.use(compression());
 
@@ -57,29 +105,17 @@ app
   )
   .use(bodyParser.json());
 
-// Session Config
-const store = new MongoDBStore({
-  uri,
-  collection: 'sessions',
-});
+/* DISABLED FOR WEEK 12 */
+// app.use(csrf());
+// app.use(flash());
 
-app.use(
-  session({
-    secret: SESSION_KEY,
-    resave: false,
-    saveUninitialized: false,
-    store,
-  })
-);
-
-app.use(csrf());
-app.use(flash());
-
-app.use((req, res, next) => {
-  res.locals.isAuthenticated = req.session.isAuthenticated;
-  res.locals.csrfToken = req.csrfToken();
+/* app.use((req, res, next) => {
+  if (req.path.includes('/shop')) {
+    res.locals.isAuthenticated = req.session.isAuthenticated;
+    res.locals.csrfToken = req.csrfToken();
+  }
   next();
-});
+}); */
 
 // Enrich user with Mongoose model
 app.use(async (req, res, next) => {
@@ -113,5 +149,4 @@ mongoose
     server.listen(PORT, () =>
       console.info(`Listening on http://localhost:${PORT}`)
     );
-    connectSocketIO();
   });

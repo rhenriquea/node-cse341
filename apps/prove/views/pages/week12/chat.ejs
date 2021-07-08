@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../../includes/header.ejs %>
+    <link rel="stylesheet" href="/stylesheets/chat.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700,300" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.1.2/css/material-design-iconic-font.min.css" />
+  </head>
+
+  <body>
+    <% include ../../includes/nav.ejs %>
+   
+    <div class="page">
+        <div class="screen">
+          <div class="screen-container">
+            <div class="status-bar">
+              <div class="time"></div>
+              <div class="battery">
+                <i class="zmdi zmdi-battery"></i>
+                <span id="battery"></span>
+              </div>
+              <div class="network">
+                <i class="zmdi zmdi-network"></i>
+              </div>
+              <div class="wifi">
+                <i class="zmdi zmdi-wifi-alt-2"></i>
+              </div>
+              <div class="star">
+                <i class="zmdi zmdi-star"></i>
+              </div>
+            </div>
+            <div class="chat">
+              <div class="chat-container">
+                <div class="user-bar">
+                  <% if (chatUser) { %>
+                  <div class="avatar">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/1024px-User-avatar.svg.png" alt="Avatar">
+                  </div>
+                  <div class="name">
+                    <span><%= chatUser %></span>
+                    <span class="status">online</span>
+                  </div>
+                  <% } else { %>
+                    <div class="border font-weight-light p-1">
+
+                      <a href="/prove/week12" class="text-light">
+                        <i class="zmdi zmdi-arrow-left"></i>
+                      Back</a>
+                    </div>
+                  <% } %>
+                </div>
+                <div class="conversation">
+                  <div class="conversation-container">
+                    <div class="message received">
+                      <span class="metadata">
+                        <span class="time">John @ 17:31</span>
+                      </span>
+                      <span>It feels lonely in here...</span>
+                    </div>
+                    <div class="message received">
+                      <span class="metadata">
+                        <span class="time">Admin @ 17:35</span>
+                      </span>
+                      <span>John left the group...</span>
+                    </div>
+                  </div>
+
+                  <% if (chatUser) { %>
+                  <form class="conversation-compose" id="messageForm">
+                    <div class="emoji"></div>
+                    <input class="input-msg" name="message" id="message" placeholder="Type a message" autocomplete="off" autofocus></input>
+                    <input type="hidden" value="<%= chatUser %>" name="user" id="user">
+                    <div class="photo"></div>
+                    <button class="send">
+                        <div class="circle">
+                          <i class="zmdi zmdi-mail-send"></i>
+                        </div>
+                      </button>
+                  </form>
+                  <% } else { %>
+                    <p class="ml-2 lead bg-info w-25 text-center text-light font-weight-bolder">No login, view only.</p>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+      
+        </div>
+      </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/scripts/w12-chat.mjs" type="module"></script>
+  </body>
+</html>

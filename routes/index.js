@@ -36,11 +36,17 @@ routes.get('/', (req, res) => {
       path: '/prove/week09',
     },
     {
-      title: 'Week 10 Prove: Assignment',
+      title: 'Week 10 Prove Assignment',
       subtitle: 'REST API',
       description:
         'Using dummy data to create an update capability using axios and asynchronous JavaScript',
       path: '/prove/week10',
+    },
+    {
+      title: 'Week 12 Prove Assignment',
+      subtitle: 'Chat APP',
+      description: 'Livechat room using socket.io and sessions',
+      path: '/prove/week12',
     },
   ];
 

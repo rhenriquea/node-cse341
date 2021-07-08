@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../../includes/header.ejs %>
+    <link rel="stylesheet" href="/stylesheets/login.css" />
+  </head>
+
+  <body>
+    <% include ../../includes/nav.ejs %>
+    <div class="container mt-5">
+      <div class="form-container">
+        <form class="form-signin" id="loginForm" novalidate>
+          <div class="text-center mb-2">
+            <h1
+              class="
+                navbar-brand
+                px-3
+                text-white
+                bg-info
+                rounded
+                font-weight-light
+                mb-3
+              "
+            >
+              <%= title %>
+            </h1>
+          </div>
+
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="form-control mb-3"
+            placeholder="Username"
+            autofocus
+          />
+
+          <div
+            id="errorMessage"
+            class="input-error mb-3 bg-danger text-light px-2 py-1 badge"
+          ></div>
+
+          <button
+            id="submitBtn"
+            class="btn btn-lg btn-primary btn-block"
+            type="submit"
+          >
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/scripts/w12-login.mjs" type="module"></script>
+  </body>
+</html>
